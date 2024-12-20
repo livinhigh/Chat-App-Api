@@ -27,6 +27,12 @@ const initializeWebSocket = (server) => {
     socket.on('disconnect', () => {
       console.log(`Client disconnected: ${socket.id}`);
     });
+
+    //For websocket test
+    socket.on('chat message', (msg) => {
+      console.log('message: ' + msg);
+      io.emit('chat message', msg);
+    });
   });
 };
 
