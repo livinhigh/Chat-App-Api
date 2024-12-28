@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Login / Signup</title>
+  <style>
+    body { margin: 0; font-family: sans-serif; padding: 1rem; }
+    form { display: flex; flex-direction: column; max-width: 300px; margin: 2rem auto; }
+    input, button { margin: 0.5rem 0; padding: 0.5rem; }
+    #switchFormBtn { color: #00f; text-decoration: underline; background: none; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1 id="formTitle">Login</h1>
+  <form id="authForm">
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button type="submit" id="submitBtn">Login</button>
+  </form>
+  <button id="switchFormBtn">Switch to Signup</button>
+
+  <script>
+    const form = document.getElementById('authForm');
+    const formTitle = document.getElementById('formTitle');
+    const switchFormBtn = document.getElementById('switchFormBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const emailTextBox = document.getElementById('email');
+
+    let isSignup = false;
+
+    // Toggle between Login and Signup
+    switchFormBtn.addEventListener('click', () => {
+      isSignup = !isSignup;
+      if (isSignup) {
+        formTitle.textContent = 'Signup';
+        submitBtn.textContent = 'Signup';
+        switchFormBtn.textContent = 'Switch to Login';
+        emailTextBox.hidden=false;
+      } else {
+        formTitle.textContent = 'Login';
+        submitBtn.textContent = 'Login';
+        switchFormBtn.textContent = 'Switch to Signup';
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      let url = '/api/auth/login';
+      let bodyData = {username, email, password };
+
+      if (isSignup) {
+        url = '/api/auth/signup';
+        //bodyData = { username, email, password };
+      }
+
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bodyData)
+        });
+        
+        if (!res.ok) {
+          // Handle error (e.g., show an alert, or display validation errors)
+          const errorData = await res.json();
+          alert(errorData.message || 'Authentication failed');
+          console.log(errorData.message)
+          return;
+        }
+
+        const data = await res.json();
+        const token = data.token;
+        
+        // Store JWT in localStorage (or cookie)
+        localStorage.setItem('chatToken', token);
+
+        // Redirect to chat page
+        window.location.href = 'chat.html';
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Something went wrong');
+      }
+    });
+  </script>
+</body>
+</html>
