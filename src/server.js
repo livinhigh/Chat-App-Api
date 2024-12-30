@@ -11,15 +11,11 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-//This is a temporary code for testing websockets
-// app.get('/', (req, res) => {
-//   res.sendFile(join(__dirname, 'web-app/index.html'));
-// });
-app.use(express.static(join(__dirname, 'web-app')));
-
-
 // Middleware
 app.use(express.json());
+
+// Serve static files
+app.use(express.static(join(__dirname, 'web-app')));
 
 // Database connection
 connectDB().catch(err => {
@@ -27,8 +23,7 @@ connectDB().catch(err => {
   process.exit(1);
 });
 
-// Create an HTTP server
-
+// Create an HTTPS server
 const key = fs.readFileSync(process.env.SSL_KEY_PATH);
 const cert = fs.readFileSync(process.env.SSL_CERT_PATH);
 

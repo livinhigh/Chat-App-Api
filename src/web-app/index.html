@@ -14,7 +14,7 @@
   <h1 id="formTitle">Login</h1>
   <form id="authForm">
     <input type="text" id="username" placeholder="Username" required />
-    <input type="email" id="email" placeholder="Email" required />
+    <input type="email" id="email" placeholder="Email" hidden />
     <input type="password" id="password" placeholder="Password" required />
     <button type="submit" id="submitBtn">Login</button>
   </form>
@@ -25,7 +25,7 @@
     const formTitle = document.getElementById('formTitle');
     const switchFormBtn = document.getElementById('switchFormBtn');
     const submitBtn = document.getElementById('submitBtn');
-    const emailTextBox = document.getElementById('email');
+    const emailInput = document.getElementById('email');
 
     let isSignup = false;
 
@@ -36,11 +36,14 @@
         formTitle.textContent = 'Signup';
         submitBtn.textContent = 'Signup';
         switchFormBtn.textContent = 'Switch to Login';
-        emailTextBox.hidden=false;
+        emailInput.hidden = false;
+        emailInput.required = true;
       } else {
         formTitle.textContent = 'Login';
         submitBtn.textContent = 'Login';
         switchFormBtn.textContent = 'Switch to Signup';
+        emailInput.hidden = true;
+        emailInput.required = false;
       }
     });
 
@@ -56,7 +59,6 @@
 
       if (isSignup) {
         url = '/api/auth/signup';
-        //bodyData = { username, email, password };
       }
 
       try {
