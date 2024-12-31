@@ -19,7 +19,7 @@ jobs:
           node-version: 16
 
       - name: Change CWD to the app's directory
-        run: cd Chat-App-Api/src
+        run: cd src
 
       - name: Install dependencies
         run: npm install
