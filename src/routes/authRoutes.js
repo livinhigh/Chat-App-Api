@@ -13,7 +13,7 @@ router.post('/signup', [
 
 // Login route
 router.post('/login', [
-  body('email').isEmail().withMessage('Invalid email'),
+  body('username').isAlphanumeric().withMessage('Invalid email'),
   body('password').notEmpty().withMessage('Password is required'),
 ], login);
 

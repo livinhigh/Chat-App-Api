@@ -55,10 +55,11 @@
       const password = document.getElementById('password').value;
 
       let url = '/api/auth/login';
-      let bodyData = {username, email, password };
+      let bodyData = {username, password };
 
       if (isSignup) {
         url = '/api/auth/signup';
+        bodyData = {username, email, password };
       }
 
       try {
@@ -81,6 +82,9 @@
         
         // Store JWT in localStorage (or cookie)
         localStorage.setItem('chatToken', token);
+
+        // Store Username in localStorage (or cookie)
+        localStorage.setItem('username', username);
 
         // Redirect to chat page
         window.location.href = 'chat.html';
