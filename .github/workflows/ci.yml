@@ -26,7 +26,6 @@ jobs:
 
       - name: Run tests with coverage
         run: npm run test -- --coverage
-        working-directory: src
 
       - name: Enforce coverage threshold
         run: |
