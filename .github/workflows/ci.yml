@@ -23,7 +23,6 @@ jobs:
 
       - name: Fix Jest permissions
         run: chmod +x node_modules/.bin/jest
-        working-directory: src
 
       - name: Run tests with coverage
         run: npm run test -- --coverage
