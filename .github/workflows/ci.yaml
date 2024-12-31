@@ -1,0 +1,37 @@
+name: CI
+
+# Trigger the workflow on pull requests targeting 'main'
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v3
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests with coverage
+        run: npm run test -- --coverage
+
+      - name: Enforce coverage threshold
+        run: |
+          # Example using Jest coverage reports:
+          # If you're using Jest, coverage summary is typically output to coverage/lcov-report.
+          # Or you can parse coverage from jest's console output.
+          coverage=$(grep -Po 'All files.*\K\d+(?=%)' coverage/lcov-report/index.html || echo 0)
+          echo "Coverage detected: $coverage%"
+          if [ "$coverage" -lt "80" ]; then
+            echo "Coverage below 80%. Failing the build."
+            exit 1
+          fi
