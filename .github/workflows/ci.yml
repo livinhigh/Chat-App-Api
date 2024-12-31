@@ -17,22 +17,21 @@ jobs:
         with:
           node-version: 22
 
-      # Install dependencies inside the src folder
       - name: Install dependencies
         run: npm install
         working-directory: src
 
-      # Run tests with coverage
+      - name: Fix Jest permissions
+        run: chmod +x node_modules/.bin/jest
+
       - name: Run tests with coverage
         run: npm run test -- --coverage
-        working-directory: src
 
       - name: Enforce coverage threshold
         run: |
-          coverage=$(grep -Po 'All files.*\K\d+(?=%)' coverage/lcov-report/index.html || echo 0)
+          coverage=$(grep -Po 'All files\s*.*\s*\K\d+(?=%)' coverage/lcov-report/index.html || echo 0)
           echo "Coverage detected: $coverage%"
           if [ "$coverage" -lt "80" ]; then
             echo "Coverage below 80%. Failing the build."
             exit 1
           fi
-        working-directory: src
