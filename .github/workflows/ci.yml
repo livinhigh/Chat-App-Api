@@ -35,4 +35,3 @@ jobs:
             echo "Coverage below 80%. Failing the build."
             exit 1
           fi
-        working-directory: src
