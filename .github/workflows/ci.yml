@@ -29,7 +29,7 @@ jobs:
 
       - name: Enforce coverage threshold
         run: |
-          coverage=$(grep -Po 'All files.*\K\d+(?=%)' coverage/lcov-report/index.html || echo 0)
+          coverage=$(grep -Po 'All files\s*.*\s*\K\d+(?=%)' coverage/lcov-report/index.html || echo 0)
           echo "Coverage detected: $coverage%"
           if [ "$coverage" -lt "80" ]; then
             echo "Coverage below 80%. Failing the build."
