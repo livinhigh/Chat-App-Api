@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        // This is our debug configuration for Jest
+        "type": "pwa-node",
+        "request": "launch",
+        "name": "Debug Jest Tests",
+        // Use your local Jest binary
+        "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+        // Pass any arguments to Jest here:
+        // --runInBand is helpful to run tests serially (easier to debug)
+        // --watchAll=false ensures we don't get stuck in watch mode
+        "args": ["--runInBand"],
+        "cwd": "${workspaceFolder}",
+        // If your tests are in TypeScript, you might need "runtimeExecutable" or a preprocessor
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen"
+      }
+    ]
+  }
+  
