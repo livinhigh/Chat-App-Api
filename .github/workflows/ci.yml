@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: 16
 
-      - name: Change CWD to the app's directory
+      - name: Change CWD to the app's directory-
         run: cd src
 
       - name: Install dependencies
