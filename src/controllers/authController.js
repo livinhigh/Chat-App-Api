@@ -1,14 +1,8 @@
-const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
 // Signup handler
 const signup = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
   try {
     const { username, email, password } = req.body;
 
@@ -31,11 +25,6 @@ const signup = async (req, res) => {
 
 // Login handler
 const login = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
